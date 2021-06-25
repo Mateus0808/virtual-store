@@ -1,16 +1,30 @@
 import { Connection, getConnection, getCustomRepository } from 'typeorm'
 import { UserRepository } from '../repositories/UserRepository'
+import request from 'supertest'
+
 import '../database'
+import app from '../index'
 
 describe('User Service', () => {
   let connection: Connection
+  const users = [
+    {
+      firstName: 'joao',
+      lastName: 'santos',
+      email: 'joao@gmail.com',
+      phone: '99 9 9999-999',
+      gender: 'Masculino',
+      dateBirth: '1998-08-05',
+      password: '12345689'
+    }
+  ]
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     connection = await getConnection()
     await connection.connect()
   })
 
-  afterAll(async () => {
+  afterEach(async () => {
     await connection.close()
   })
 
@@ -30,5 +44,37 @@ describe('User Service', () => {
     await userRepository.save(user)
 
     expect(user.email).toEqual('h@gmail.com')
+  })
+
+  it('User add and ruturn status code 201', async () => {
+    const response = await request(app)
+      .post('/user')
+      .send({
+        firstName: 'mateus',
+        lastName: 'santos',
+        email: 'mateus@gmail.com',
+        phone: '99 9 9999-999',
+        gender: 'Masculino',
+        dateBirth: '1998-08-05',
+        password: '12345689'
+      })
+
+    expect(response.status).toBe(201)
+  })
+
+  it('User add and ruturn status code 201', async () => {
+    const response = await request(app)
+      .post('/user')
+      .send({
+        firstName: 'joao',
+        lastName: 'santos',
+        email: 'joao@gmail.com',
+        phone: '99 9 9999-999',
+        gender: 'Masculino',
+        dateBirth: '1998-08-05',
+        password: '12345689'
+      })
+
+    expect(response.body).toMatchObject(users[0])
   })
 })
