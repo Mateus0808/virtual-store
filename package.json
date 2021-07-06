@@ -5,6 +5,7 @@
    "author": "<loiolamateus7@gmail.com>",
    "license": "MIT",
    "scripts": {
+      "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
       "dev": "set NODE_ENV=development&& ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/server.ts",
       "start": "ts-node src/index.ts",
       "test": "set NODE_ENV=test&& jest --detectOpenHandles",
@@ -12,6 +13,11 @@
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
    },
    "devDependencies": {
+      "@babel/cli": "^7.14.5",
+      "@babel/core": "^7.14.6",
+      "@babel/node": "^7.14.7",
+      "@babel/preset-env": "^7.14.7",
+      "@babel/preset-typescript": "^7.14.5",
       "@types/express": "^4.17.12",
       "@types/jest": "^26.0.23",
       "@types/node": "^8.0.29",
@@ -19,6 +25,7 @@
       "@types/uuid": "^8.3.0",
       "@typescript-eslint/eslint-plugin": "^4.28.0",
       "@typescript-eslint/parser": "^4.28.0",
+      "babel-plugin-module-resolver": "^4.1.0",
       "eslint": "^7.29.0",
       "eslint-config-standard": "^16.0.3",
       "eslint-plugin-import": "^2.23.4",

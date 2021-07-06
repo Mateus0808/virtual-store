@@ -1,28 +1,39 @@
 import { Response, Request } from 'express'
-import { UserRepository } from '../repositories/UserRepository'
-import { getCustomRepository } from 'typeorm'
+import { UserService } from '../services/UserService'
 
 const UserController = {
   async create (req: Request, res: Response): Promise<Response> {
-    const body = req.body
+    const { firstName, lastName, email, dateBirth, gender, phone, password } = req.body
 
-    const { firstName, lastName, email, dateBirth, gender, phone, password } = body
+    const userService = new UserService()
+    try {
+      const user = await userService.create({ firstName, lastName, email, dateBirth, gender, phone, password })
 
-    const userRepository = getCustomRepository(UserRepository)
-    const user = userRepository.create({
-      firstName,
-      lastName,
-      email,
-      phone,
-      gender,
-      dateBirth,
-      password
-    })
+      return res.status(201).json(user)
+    } catch (err) {
+      return res.status(400).json({
+        message: err.message
+      })
+    }
+  },
 
-    await userRepository.save(user)
+  async read (req: Request, res: Response): Promise<Response> {
+    const userService = new UserService()
 
-    return res.status(201).json(user)
+    const allUsers = userService.read()
+
+    return res.status(200).json(allUsers)
   }
+
+  // async update (req: Request, res: Response): Promise<Response> {
+  //   const { firstName, lastName, email, dateBirth, gender, phone, password } = req.body
+  //   //const userId = req.params.userId
+
+  //   const userService = new UserService()
+
+  //     const userUpdate = userService.update({ firstName, lastName, email, dateBirth, gender, phone, password })
+  // }
+
 }
 
 export default UserController
