@@ -1,6 +1,7 @@
 import { UserRepository } from '../repositories/UserRepository'
 import { getCustomRepository, Repository } from 'typeorm'
 import { User } from '@models/User'
+import { validate } from 'class-validator'
 
 interface InterfaceSettingsService {
   firstName: string,
@@ -8,7 +9,7 @@ interface InterfaceSettingsService {
   email: string,
   phone: string,
   gender: string,
-  dateBirth: Date,
+  dateBirthFormat: Date,
   password: string
 }
 
@@ -19,7 +20,7 @@ class UserService {
     this.userRepository = getCustomRepository(UserRepository)
   }
 
-  async create ({ firstName, lastName, email, phone, gender, dateBirth, password }: InterfaceSettingsService) {
+  async create ({ firstName, lastName, email, phone, gender, dateBirthFormat, password }: InterfaceSettingsService) {
     const userAlreadyExists = await this.userRepository.findOne({ email })
 
     if (userAlreadyExists) {
@@ -27,15 +28,20 @@ class UserService {
     }
 
     const user = this.userRepository.create({
-      firstName, lastName, email, phone, gender, dateBirth, password
+      firstName, lastName, email, phone, gender, dateBirth: dateBirthFormat, password
     })
 
+    const errors = await validate(user)
+
+    if (errors.length !== 0) {
+      throw new Error('Error registering user! Check the data again.')
+    }
     await this.userRepository.save(user)
 
     return user
   }
 
-  async read () {
+  async findUsers () {
     const allUsers = await this.userRepository.find()
 
     return allUsers

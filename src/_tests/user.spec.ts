@@ -7,6 +7,8 @@ import app from '../index'
 
 describe('User Service', () => {
   let connection: Connection
+  const dateBirthFormat = new Date('1998-08-05')
+
   const users = [
     {
       firstName: 'joao',
@@ -14,7 +16,7 @@ describe('User Service', () => {
       email: 'joao@gmail.com',
       phone: '99 9 9999-999',
       gender: 'Masculino',
-      dateBirth: '1998-08-05',
+      dateBirth: dateBirthFormat,
       password: '12345689'
     }
   ]
@@ -62,7 +64,7 @@ describe('User Service', () => {
     expect(response.status).toBe(201)
   })
 
-  it('User add and ruturn status code 201', async () => {
+  it('Add user and return same object', async () => {
     const response = await request(app)
       .post('/user')
       .send({
@@ -75,6 +77,6 @@ describe('User Service', () => {
         password: '12345689'
       })
 
-    expect(response.body).toMatchObject(users[0])
+    expect(response.body.email).toBe(users[0].email)
   })
 })
