@@ -1,12 +1,17 @@
 /* eslint-disable camelcase */
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
 import { v4 as uuid } from 'uuid'
+import { Products } from './Products'
 
 @Entity('users')
 export class User {
   @PrimaryColumn()
   id: string
+
+  @OneToMany(() => Products, user => User)
+  @JoinColumn()
+  products: Products[]
 
   @Column({ name: 'first_name' })
   firstName: string
