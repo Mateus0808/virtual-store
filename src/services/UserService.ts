@@ -1,5 +1,6 @@
 import { UserRepository } from '../repositories/UserRepository'
-import { getCustomRepository } from 'typeorm'
+import { getCustomRepository, Repository } from 'typeorm'
+import { User } from '@models/User'
 
 interface InterfaceSettingsService {
   firstName: string,
@@ -12,43 +13,51 @@ interface InterfaceSettingsService {
 }
 
 class UserService {
-  async create ({ firstName, lastName, email, phone, gender, dateBirth, password }: InterfaceSettingsService) {
-    const userRepository = getCustomRepository(UserRepository)
+  private userRepository: Repository<User>
 
-    const userAlreadyExists = await userRepository.findOne({ email })
+  constructor () {
+    this.userRepository = getCustomRepository(UserRepository)
+  }
+
+  async create ({ firstName, lastName, email, phone, gender, dateBirth, password }: InterfaceSettingsService) {
+    const userAlreadyExists = await this.userRepository.findOne({ email })
 
     if (userAlreadyExists) {
       throw new Error('User already exists!')
     }
 
-    const user = userRepository.create({
+    const user = this.userRepository.create({
       firstName, lastName, email, phone, gender, dateBirth, password
     })
 
-    await userRepository.save(user)
+    await this.userRepository.save(user)
 
     return user
   }
 
   async read () {
-    const userRepository = getCustomRepository(UserRepository)
-
-    const allUsers = await userRepository.find()
+    const allUsers = await this.userRepository.find()
 
     return allUsers
   }
 
   // async update ({ firstName, lastName, email, phone, gender, dateBirth, password }: InterfaceSettingsService) {
-  //   const userRepository = getCustomRepository(UserRepository)
-
-  //   const user = await userRepository.findOne({ email })
+  //   const user = await this.userRepository.findOne({ email })
 
   //   if (!user) {
   //     throw new Error('User not found!')
   //   }
 
-  //   const userUpdate = await userRepository.update({
-  //     firstName, lastName, email, phone, gender, dateBirth, password
+  //   const userUpdate = await this.userRepository.update({
+  //     firstName,
+  //     lastName,
+  //     email,
+  //     phone,
+  //     gender,
+  //     dateBirth,
+  //     password
+  //   }, {
+  //     user
   //   })
 
   //   return userUpdate

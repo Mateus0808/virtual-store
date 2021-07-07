@@ -20,7 +20,7 @@ const UserController = {
   async read (req: Request, res: Response): Promise<Response> {
     const userService = new UserService()
 
-    const allUsers = userService.read()
+    const allUsers = await userService.read()
 
     return res.status(200).json(allUsers)
   }

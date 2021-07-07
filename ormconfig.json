@@ -1,52 +1,24 @@
-[
-  {
-    "name": "development",
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "postgres",
-    "password": "minhasenhae?",
-    "database": "products",
-    "synchronize": true,
-    "logging": false,
-    "entities": [
-      "src/models/**/*.ts"
-    ],
-    "migrations": [
-      "src/database/migration/**/*.ts"
-    ],
-    "subscribers": [
-      "src/subscriber/**/*.ts"
-    ],
-    "cli": {
-      "entitiesDir": "src/models",
-      "migrationsDir": "src/database/migration",
-      "subscribersDir": "src/subscriber"
-    }
-  },
-  {
-    "name": "test",
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "postgres",
-    "password": "minhasenhae?",
-    "database": "test_products",
-    "synchronize": true,
-    "logging": false,
-    "entities": [
-      "src/models/**/*.ts"
-    ],
-    "migrations": [
-      "src/database/migration/**/*.ts"
-    ],
-    "subscribers": [
-      "src/subscriber/**/*.ts"
-    ],
-    "cli": {
-      "entitiesDir": "src/models",
-      "migrationsDir": "src/database/migration",
-      "subscribersDir": "src/subscriber"
-    }
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "minhasenhae?",
+  "database": "products",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+    "src/models/**/*.ts"
+  ],
+  "migrations": [
+    "src/database/migration/**/*.ts"
+  ],
+  "subscribers": [
+    "src/subscriber/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "src/models",
+    "migrationsDir": "src/database/migration",
+    "subscribersDir": "src/subscriber"
   }
-]
+}
