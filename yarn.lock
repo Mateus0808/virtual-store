@@ -1809,6 +1809,11 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
+awesome-phonenumber@^2.54.0:
+  version "2.54.0"
+  resolved "https://registry.yarnpkg.com/awesome-phonenumber/-/awesome-phonenumber-2.54.0.tgz#4e258ce30f4ffcc6408563be8b95c787135b9746"
+  integrity sha512-ap//rga04ZgutBePM9IIbj1+HVkxJgxVBwp4wjdlay3cXdHTIRrbluYVxlwCqWARfz86Rf3XrDC0iYVbtruBwA==
+
 babel-jest@^27.0.5:
   version "27.0.5"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-27.0.5.tgz#cd34c033ada05d1362211e5152391fd7a88080c8"

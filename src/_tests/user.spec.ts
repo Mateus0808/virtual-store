@@ -11,13 +11,13 @@ describe('User Service', () => {
 
   const users = [
     {
-      firstName: 'joao',
-      lastName: 'santos',
+      firstName: 'João',
+      lastName: 'Soares',
       email: 'joao@gmail.com',
-      phone: '99 9 9999-999',
+      phone: '(84) 99845-4545',
       gender: 'Masculino',
       dateBirth: dateBirthFormat,
-      password: '12345689'
+      password: 'joao'
     }
   ]
 
@@ -34,31 +34,31 @@ describe('User Service', () => {
     const userRepository = await getCustomRepository(UserRepository)
 
     const user = await userRepository.create({
-      firstName: 'trtrt',
-      lastName: 'dos fdfdfd',
-      email: 'h@gmail.com',
+      firstName: 'Vitoria',
+      lastName: 'Ferreira',
+      email: 'vitoria@gmail.com',
       phone: '99 9 9999-999',
-      gender: 'Masculino',
-      dateBirth: '1998-08-05',
-      password: '12345689'
+      gender: 'Feminino',
+      dateBirth: '1999-11-15',
+      password: 'vitoria'
     })
 
     await userRepository.save(user)
 
-    expect(user.email).toEqual('h@gmail.com')
+    expect(user.email).toEqual('vitoria@gmail.com')
   })
 
   it('User add and ruturn status code 201', async () => {
     const response = await request(app)
       .post('/user')
       .send({
-        firstName: 'mateus',
-        lastName: 'santos',
-        email: 'mateus@gmail.com',
-        phone: '99 9 9999-999',
+        firstName: 'Adelson',
+        lastName: 'Nunes',
+        email: 'adelson@gmail.com',
+        phone: '88 98945-9994',
         gender: 'Masculino',
         dateBirth: '1998-08-05',
-        password: '12345689'
+        password: 'adelson'
       })
 
     expect(response.status).toBe(201)
@@ -68,13 +68,13 @@ describe('User Service', () => {
     const response = await request(app)
       .post('/user')
       .send({
-        firstName: 'joao',
-        lastName: 'santos',
+        firstName: 'João',
+        lastName: 'Soares',
         email: 'joao@gmail.com',
-        phone: '99 9 9999-999',
+        phone: '84 99894-9456',
         gender: 'Masculino',
         dateBirth: '1998-08-05',
-        password: '12345689'
+        password: 'joao'
       })
 
     expect(response.body.email).toBe(users[0].email)
