@@ -4,7 +4,7 @@ import { UserService } from '../services/UserService'
 const UserController = {
   async create (req: Request, res: Response): Promise<Response> {
     const { firstName, lastName, email, dateBirth, gender, phone, password } = req.body
-    console.log(req.body)
+
     const userService = new UserService()
     try {
       const user = await userService.create({ firstName, lastName, email, dateBirth, gender, phone, password })

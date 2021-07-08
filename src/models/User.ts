@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 import { IsDate, IsEmail, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator'
 import { v4 as uuid } from 'uuid'
 import { Products } from './Products'
@@ -9,8 +9,7 @@ export class User {
   @PrimaryColumn()
   id: string
 
-  @OneToMany(() => Products, user => User)
-  @JoinColumn()
+  @OneToMany(() => Products, product => product.user, { nullable: true, onDelete: 'CASCADE' })
   products: Products[]
 
   @Column({ name: 'first_name' })
@@ -26,7 +25,7 @@ export class User {
   lastName: string
 
   @Column({ unique: true })
-  @IsEmail()
+  @IsEmail({}, { message: 'Invalid e-mail! Please enter a valid email address.' })
   @IsString()
   email: string
 

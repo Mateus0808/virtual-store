@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
 import { v4 as uuid } from 'uuid'
 import { User } from './User'
@@ -8,7 +8,11 @@ export class Products {
   @PrimaryColumn()
   id: string
 
-  @ManyToOne(() => User, products => Products)
+  @Column()
+  userId: string
+
+  @ManyToOne(() => User, user => user.products)
+  @JoinColumn({ name: 'userId' })
   user: User
 
   @Column({ name: 'product_name' })
