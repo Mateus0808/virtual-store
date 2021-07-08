@@ -23,7 +23,7 @@ class UserService {
     this.userRepository = getCustomRepository(UserRepository)
   }
 
-  async create ({ firstName, lastName, email, phone, gender, dateBirth, password }: InterfaceUsersService) {
+  async create ({ email, phone, dateBirth, ...data }: InterfaceUsersService) {
     const dateBirthFormat = new Date(dateBirth)
     const numberFormated = phone.match(phoneFormat)
 
@@ -37,13 +37,13 @@ class UserService {
     }
 
     const user = this.userRepository.create({
-      firstName, lastName, email, phone, gender, dateBirth: dateBirthFormat, password
+      email, phone, dateBirth: dateBirthFormat, ...data
     })
 
     const errors = await validate(user)
 
     if (errors.length !== 0) {
-      throw new Error('Error registering user! Check the data again.')
+      throw new Error(`${errors}`) // 'Error registering user! Check the data again.'
     }
     await this.userRepository.save(user)
 
@@ -64,21 +64,21 @@ class UserService {
     return oneUser
   }
 
-  async update ({ userId, firstName, lastName, email, phone, gender, dateBirth, password }: InterfaceUsersService) {
+  async update ({ userId, ...data }: InterfaceUsersService) {
     const userExists = await this.userRepository.findOne(userId)
 
     if (!userExists) {
       throw new Error('User not found!')
     }
 
-    this.userRepository.merge(userExists, { firstName, lastName, email, phone, gender, dateBirth, password })
-    const userUpdate = await this.userRepository.save(userExists)
+    const userUpdate = this.userRepository.merge(userExists, { ...data })
+    await this.userRepository.save(userUpdate)
 
     return userUpdate
   }
 
   async delete ({ userId }: InterfaceUsersService) {
-    const userExists = this.userRepository.findOne(userId)
+    const userExists = await this.userRepository.findOne(userId)
     if (!userExists) {
       throw new Error('User not found!')
     }
