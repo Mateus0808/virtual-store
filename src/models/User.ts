@@ -1,52 +1,56 @@
 /* eslint-disable camelcase */
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
-import { IsDate, IsDefined, IsEmail, IsPhoneNumber, IsString, IsUUID, MaxLength, MinLength } from 'class-validator'
+import { BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { IsDate, IsEmail, IsNotEmpty, IsPhoneNumber, IsString, IsUUID, Length, Matches, MaxLength, MinLength } from 'class-validator'
 import { v4 as uuid } from 'uuid'
+import bcrypt from 'bcrypt'
+
 import { Products } from './Products'
 
 @Entity('users')
 export class User {
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   @IsUUID('4')
   id: string
 
   @OneToMany(() => Products, product => product.user, { nullable: true, onDelete: 'CASCADE' })
   products: Products[]
 
-  @Column({ name: 'first_name' })
-  @MaxLength(20)
-  @MinLength(3, { message: 'First name must be at least 3 caracters' })
+  @Column()
+  @MaxLength(60)
+  @MinLength(3, { message: 'Name must be at least 3 caracters' })
   @IsString()
-  @IsDefined({ message: 'Indefined first name ' })
-  firstName: string
-
-  @Column({ name: 'last_name' })
-  @MaxLength(40)
-  @MinLength(3)
-  @IsString()
-  lastName: string
+  @IsNotEmpty()
+  name: string
 
   @Column({ unique: true })
+  @IsNotEmpty()
   @IsEmail({}, { message: 'Invalid e-mail! Please enter a valid email address.' })
-  @IsString()
   @MinLength(7)
   email: string
 
   @Column()
   @IsPhoneNumber('BR')
   @IsString()
+  @IsNotEmpty()
+  @MinLength(11)
   phone: string
 
   @Column()
+  @MinLength(8)
+  @MaxLength(10)
   @IsString()
+  @IsNotEmpty()
   gender: string
 
   @Column({ name: 'date_birth' })
+  @IsNotEmpty()
   @IsDate()
   dateBirth: Date
 
   @Column({ name: 'password_hash' })
-  @IsString()
+  @IsNotEmpty()
+  @Length(8, 30)
+  @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, { message: 'Invalid password format' })
   password: string
 
   @UpdateDateColumn()
@@ -54,6 +58,12 @@ export class User {
 
   @CreateDateColumn()
   created_at: Date
+
+  @BeforeInsert()
+  async setPassword (password: string) {
+    const salt = await bcrypt.genSalt()
+    this.password = await bcrypt.hash(password || this.password, salt)
+  }
 
   constructor () {
     if (!this.id) {

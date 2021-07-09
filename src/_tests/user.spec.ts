@@ -11,8 +11,7 @@ describe('User Service', () => {
 
   const users = [
     {
-      firstName: 'João',
-      lastName: 'Soares',
+      name: 'João Soares',
       email: 'joaomaiu@gmail.com',
       phone: '(84) 99845-4545',
       gender: 'Masculino',
@@ -34,8 +33,7 @@ describe('User Service', () => {
     const userRepository = await getCustomRepository(UserRepository)
 
     const user = await userRepository.create({
-      firstName: 'Vitoria',
-      lastName: 'Ferreira',
+      name: 'Vitoria Ferreira',
       email: 'vitoria@gmail.com',
       phone: '99 9 9999-999',
       gender: 'Feminino',
@@ -52,13 +50,12 @@ describe('User Service', () => {
     const response = await request(app)
       .post('/user')
       .send({
-        firstName: 'Adelson',
-        lastName: 'Nunes',
+        name: 'Adelson Nunes',
         email: 'adelson@gmail.com',
         phone: '88 98945-9994',
         gender: 'Masculino',
         dateBirth: '1998-08-05',
-        password: 'adelson'
+        password: 'Adelson@123'
       })
 
     expect(response.status).toBe(201)
@@ -68,13 +65,12 @@ describe('User Service', () => {
     const response = await request(app)
       .post('/user')
       .send({
-        firstName: 'João',
-        lastName: 'Soares',
+        name: 'João Soares',
         email: 'joaomaiu@gmail.com',
         phone: '(84) 99894-9456',
         gender: 'Masculino',
         dateBirth: '1998-08-05',
-        password: 'joaoferreira'
+        password: 'Joao@123'
       })
     expect(response.body.email).toBe(users[0].email)
   })

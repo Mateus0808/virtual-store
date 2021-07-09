@@ -4,12 +4,10 @@ import { User } from '@models/User'
 import { validate } from 'class-validator'
 
 const phoneFormat = /^\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\)? (?:[2-8]|9[1-9])[0-9]{3}-[0-9]{4}$/
-// const dateFormat = /^{1}|{2}{3}-[0-9]{2}-[0-9]{2}/
 
 interface InterfaceUsersService {
   userId?: string,
-  firstName?: string,
-  lastName?: string,
+  name?: string,
   email?: string,
   phone?: string,
   gender?: string,
@@ -40,7 +38,7 @@ class UserService {
     const user = this.userRepository.create({
       email, phone, dateBirth: dateBirthFormat, ...data
     })
-    console.log(user)
+
     const errors = await validate(user)
 
     if (errors.length !== 0) {

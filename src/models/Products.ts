@@ -6,11 +6,11 @@ import { User } from './User'
 
 @Entity('products')
 export class Products {
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   @IsUUID('4')
   id: string
 
-  @Column()
+  @Column('uuid')
   @IsUUID('4')
   userId: string
 

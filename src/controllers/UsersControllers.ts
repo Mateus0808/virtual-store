@@ -3,11 +3,11 @@ import { UserService } from '../services/UserService'
 
 const UserController = {
   async create (req: Request, res: Response): Promise<Response> {
-    const { firstName, lastName, email, dateBirth, gender, phone, password } = req.body
+    const { name, email, dateBirth, gender, phone, password } = req.body
 
     const userService = new UserService()
     try {
-      const user = await userService.create({ firstName, lastName, email, dateBirth, gender, phone, password })
+      const user = await userService.create({ name, email, dateBirth, gender, phone, password })
 
       return res.status(201).json(user)
     } catch (err) {
@@ -36,11 +36,11 @@ const UserController = {
 
   async update (req: Request, res: Response): Promise<Response> {
     const userId = req.params.id
-    const { firstName, lastName, email, dateBirth, gender, phone, password } = req.body
+    const { name, email, dateBirth, gender, phone, password } = req.body
 
     const userService = new UserService()
     try {
-      const userUpdate = await userService.update({ userId, firstName, lastName, email, dateBirth, gender, phone, password })
+      const userUpdate = await userService.update({ userId, name, email, dateBirth, gender, phone, password })
 
       return res.status(200).json(userUpdate)
     } catch (err) {
