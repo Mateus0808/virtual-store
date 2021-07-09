@@ -2,9 +2,10 @@ import { ProductsRepository } from '../repositories/ProductsRepository'
 import { getCustomRepository, Repository } from 'typeorm'
 import { Products } from '@models/Products'
 import { UserRepository } from '../repositories/UserRepository'
+import { validate } from 'class-validator'
 
 interface InterfaceProductsService {
-  userId: string,
+  userId?: string,
   productId?: string,
   productName?: string,
   price?: number,
@@ -32,7 +33,11 @@ class ProductsService {
       throw new Error('User not found!')
     }
     const newProduct = this.productsRepository.create({ userId: user.id, ...data })
+    const errors = await validate(newProduct)
 
+    if (errors.length !== 0) {
+      throw new Error(`${errors}`)
+    }
     await this.productsRepository.save(newProduct)
     return newProduct
   }
@@ -44,19 +49,41 @@ class ProductsService {
   }
 
   async findProductsOneUser ({ userId }: InterfaceProductsService) {
+    if (!userId) {
+      throw new Error('User id is undefined!')
+    }
     const userRepository = getCustomRepository(UserRepository)
     const user = await userRepository.findOne({ id: userId }, { relations: ['products'] })
+    if (!user) {
+      throw new Error('User not found!')
+    }
 
     return user
   }
 
   async update ({ productId, ...data }: InterfaceProductsService) {
-    console.log(productId)
     const product = await this.productsRepository.findOne(productId)
+
+    if (!product) {
+      throw new Error('Product not found!')
+    }
     const updateProduct = this.productsRepository.merge(product, { ...data })
+
+    const errors = await validate(updateProduct)
+    if (errors.length !== 0) {
+      throw new Error(`${errors}`)
+    }
+
     await this.productsRepository.save(updateProduct)
-    console.log(updateProduct)
     return updateProduct
+  }
+
+  async delete ({ productId }: InterfaceProductsService) {
+    const productExists = await this.productsRepository.findOne(productId)
+    if (!productExists) {
+      throw new Error('Product not found!')
+    }
+    await this.productsRepository.delete(productId)
   }
 }
 

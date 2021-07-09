@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
-import { IsDate, IsEmail, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator'
+import { IsDate, IsDefined, IsEmail, IsPhoneNumber, IsString, IsUUID, MaxLength, MinLength } from 'class-validator'
 import { v4 as uuid } from 'uuid'
 import { Products } from './Products'
 
 @Entity('users')
 export class User {
   @PrimaryColumn()
+  @IsUUID('4')
   id: string
 
   @OneToMany(() => Products, product => product.user, { nullable: true, onDelete: 'CASCADE' })
@@ -14,8 +15,9 @@ export class User {
 
   @Column({ name: 'first_name' })
   @MaxLength(20)
-  @MinLength(3)
+  @MinLength(3, { message: 'First name must be at least 3 caracters' })
   @IsString()
+  @IsDefined({ message: 'Indefined first name ' })
   firstName: string
 
   @Column({ name: 'last_name' })
@@ -27,6 +29,7 @@ export class User {
   @Column({ unique: true })
   @IsEmail({}, { message: 'Invalid e-mail! Please enter a valid email address.' })
   @IsString()
+  @MinLength(7)
   email: string
 
   @Column()

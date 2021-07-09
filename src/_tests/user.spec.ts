@@ -13,7 +13,7 @@ describe('User Service', () => {
     {
       firstName: 'João',
       lastName: 'Soares',
-      email: 'joao@gmail.com',
+      email: 'joaomaiu@gmail.com',
       phone: '(84) 99845-4545',
       gender: 'Masculino',
       dateBirth: dateBirthFormat,
@@ -70,13 +70,12 @@ describe('User Service', () => {
       .send({
         firstName: 'João',
         lastName: 'Soares',
-        email: 'joao@gmail.com',
-        phone: '84 99894-9456',
+        email: 'joaomaiu@gmail.com',
+        phone: '(84) 99894-9456',
         gender: 'Masculino',
         dateBirth: '1998-08-05',
-        password: 'joao'
+        password: 'joaoferreira'
       })
-
     expect(response.body.email).toBe(users[0].email)
   })
 })

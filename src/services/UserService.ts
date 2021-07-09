@@ -4,6 +4,7 @@ import { User } from '@models/User'
 import { validate } from 'class-validator'
 
 const phoneFormat = /^\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\)? (?:[2-8]|9[1-9])[0-9]{3}-[0-9]{4}$/
+// const dateFormat = /^{1}|{2}{3}-[0-9]{2}-[0-9]{2}/
 
 interface InterfaceUsersService {
   userId?: string,
@@ -25,8 +26,8 @@ class UserService {
 
   async create ({ email, phone, dateBirth, ...data }: InterfaceUsersService) {
     const dateBirthFormat = new Date(dateBirth)
-    const numberFormated = phone.match(phoneFormat)
 
+    const numberFormated = phone.match(phoneFormat)
     if (!numberFormated) {
       throw new Error('Invalid phone!')
     }
@@ -39,7 +40,7 @@ class UserService {
     const user = this.userRepository.create({
       email, phone, dateBirth: dateBirthFormat, ...data
     })
-
+    console.log(user)
     const errors = await validate(user)
 
     if (errors.length !== 0) {
@@ -57,6 +58,10 @@ class UserService {
   }
 
   async findUser ({ userId }: InterfaceUsersService) {
+    if (!userId) {
+      throw new Error('User id is undefined!')
+    }
+
     const oneUser = await this.userRepository.findOne(userId)
     if (!oneUser) {
       throw new Error('User not found!')
@@ -64,16 +69,27 @@ class UserService {
     return oneUser
   }
 
-  async update ({ userId, ...data }: InterfaceUsersService) {
-    const userExists = await this.userRepository.findOne(userId)
+  async update ({ userId, phone, dateBirth, ...data }: InterfaceUsersService) {
+    const dateBirthFormat = new Date(dateBirth)
 
+    const numberFormated = phone.match(phoneFormat)
+    if (!numberFormated) {
+      throw new Error('Invalid phone!')
+    }
+
+    const userExists = await this.userRepository.findOne(userId)
     if (!userExists) {
       throw new Error('User not found!')
     }
 
-    const userUpdate = this.userRepository.merge(userExists, { ...data })
-    await this.userRepository.save(userUpdate)
+    const userUpdate = this.userRepository.merge(userExists, { phone, dateBirth: dateBirthFormat, ...data })
 
+    const errors = await validate(userUpdate)
+    if (errors.length !== 0) {
+      throw new Error(`${errors}`)
+    }
+
+    await this.userRepository.save(userUpdate)
     return userUpdate
   }
 
