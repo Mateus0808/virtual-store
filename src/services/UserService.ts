@@ -2,6 +2,7 @@ import { UserRepository } from '../repositories/UserRepository'
 import { getCustomRepository, Repository } from 'typeorm'
 import { User } from '@models/User'
 import { validate } from 'class-validator'
+import { generateToken } from '../utils/generateToken'
 
 const phoneFormat = /^\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\)? (?:[2-8]|9[1-9])[0-9]{3}-[0-9]{4}$/
 
@@ -46,7 +47,10 @@ class UserService {
     }
     await this.userRepository.save(user)
 
-    return user
+    return {
+      user,
+      token: generateToken({ userId: user.id })
+    }
   }
 
   async findUsers () {

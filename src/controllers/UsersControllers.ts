@@ -1,13 +1,17 @@
 import { Response, Request } from 'express'
 import { UserService } from '../services/UserService'
 
+interface RequestCustom extends Request {
+  userId: string
+}
+
 const UserController = {
-  async create (req: Request, res: Response): Promise<Response> {
-    const { name, email, dateBirth, gender, phone, password } = req.body
+  async create (req: RequestCustom, res: Response): Promise<Response> {
+    const { ...data } = req.body
 
     const userService = new UserService()
     try {
-      const user = await userService.create({ name, email, dateBirth, gender, phone, password })
+      const user = await userService.create({ ...data })
 
       return res.status(201).json(user)
     } catch (err) {
@@ -15,14 +19,13 @@ const UserController = {
     }
   },
 
-  async listUsers (req: Request, res: Response): Promise<Response> {
+  async listUsers (req: RequestCustom, res: Response): Promise<Response> {
     const userService = new UserService()
-
     const allUsers = await userService.findUsers()
     return res.status(200).json(allUsers)
   },
 
-  async oneUser (req: Request, res: Response): Promise<Response> {
+  async oneUser (req: RequestCustom, res: Response): Promise<Response> {
     const userId = req.params.id
     const userService = new UserService()
     try {
@@ -34,32 +37,30 @@ const UserController = {
     }
   },
 
-  async update (req: Request, res: Response): Promise<Response> {
+  async update (req: RequestCustom, res: Response): Promise<Response> {
     const userId = req.params.id
     const { name, email, dateBirth, gender, phone, password } = req.body
-
     const userService = new UserService()
+
     try {
       const userUpdate = await userService.update({ userId, name, email, dateBirth, gender, phone, password })
-
       return res.status(200).json(userUpdate)
     } catch (err) {
       return res.status(400).json({ message: err.message })
     }
   },
 
-  async delete (req: Request, res: Response): Promise<Response> {
+  async delete (req: RequestCustom, res: Response): Promise<Response> {
     const userId = req.params.id
     const userService = new UserService()
+
     try {
       await userService.delete({ userId })
-
       return res.status(200).json({ message: 'Deleted user!' })
     } catch (err) {
       return res.status(400).json({ message: err.message })
     }
   }
-
 }
 
 export default UserController

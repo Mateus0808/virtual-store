@@ -72,6 +72,7 @@ describe('User Service', () => {
         dateBirth: '1998-08-05',
         password: 'Joao@123'
       })
-    expect(response.body.email).toBe(users[0].email)
+    console.log(response.body)
+    expect(response.body.user.email).toBe(users[0].email)
   })
 })
