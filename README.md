@@ -29,14 +29,13 @@ The following tools were used in the construction of the project:
 ### Autor
 ---
 
-<a href="">
- <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/47755555?s=400&u=c38445d9bd8886642d093308cdad61e4642d4b8a&v=4" width="100px;" alt=""/>
- <br />
- <sub><b>Mateus dos Santos</b></sub>
-</a>
+<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/47755555?s=400&u=c38445d9bd8886642d093308cdad61e4642d4b8a&v=4" width="100px;" alt=""/>
+<br />
+<sub><b>Mateus dos Santos</b></sub>
+
 
 [![Linkedin Badge](https://img.shields.io/badge/-Mateus-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/mateus-santos-aa0623196//)](https://www.linkedin.com/in/mateus-santos-aa0623196/) 
-[![Gmail Badge](https://img.shields.io/badge/-tgmarinho@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:loiolamateus7@gmail.com)](mailto:loiolamateus7@gmail.com)
+[![Gmail Badge](https://img.shields.io/badge/-loiolamateus7@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:loiolamateus7@gmail.com)](mailto:loiolamateus7@gmail.com)
 
 
 ### License
