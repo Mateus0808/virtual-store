@@ -12,8 +12,8 @@
 </h4>
 
 ### Features
-  - [x] Cadastro de usuário
-  - [x] Cadastro de produtos
+ - [x] Cadastro de usuário
+ - [x] Cadastro de produtos
 
 ### Pré-requisitos
 Before starting, you will need to have the following tools installed on your machine: [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
