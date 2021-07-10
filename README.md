@@ -12,9 +12,9 @@
 </h4>
 
 ### Features
-<input type="checkbox">
-<label> Cadastro de usuário</label><br>
-<input type="checkbox">
+<input type="checkbox" checked>
+<label for=""> Cadastro de usuário</label><br>
+<input type="checkbox" checked>
 <label> Cadastro de produtos</label><br>
 
 ### Pré-requisitos
