@@ -13,7 +13,7 @@
 
 ### Features
 <div>
-  <input type="checkbox" checked>
+  <input type="checkbox" checked />
   <label>Cadastro de usuário</label>
 </div>
 <div>
