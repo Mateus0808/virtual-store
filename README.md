@@ -9,7 +9,7 @@
   3. Run `npm start` or `yarn start` comman
 
 ## Project description
-<p align="center"Back-end built to manage a virtual store</p>
+<p align="center">Back-end built to manage a virtual store</p>
 
 ### Project Status
 <h4 align="center"> 
