@@ -12,10 +12,14 @@
 </h4>
 
 ### Features
-<input type="checkbox" checked>
-<label> Cadastro de usuário</label><br>
-<input type="checkbox" checked>
-<label> Cadastro de produtos</label><br>
+<div>
+  <input type="checkbox" checked>
+  <label>Cadastro de usuário</label>
+</div>
+<div>
+  <input type="checkbox" checked>
+  <label>Cadastro de produtos</label>
+</div>
 
 ### Pré-requisitos
 Before starting, you will need to have the following tools installed on your machine: [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
