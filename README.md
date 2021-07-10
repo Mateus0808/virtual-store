@@ -13,7 +13,7 @@
 
 ### Features
 <input type="checkbox" checked>
-<label for=""> Cadastro de usuário</label><br>
+<label> Cadastro de usuário</label><br>
 <input type="checkbox" checked>
 <label> Cadastro de produtos</label><br>
 
