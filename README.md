@@ -1,7 +1,5 @@
 # Virtual Store
 ---
-# Awesome Project Build with TypeORM
-
 ### Project description
 <p align="center">Back-end built to manage a virtual store</p>
 
