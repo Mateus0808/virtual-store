@@ -57,8 +57,8 @@ class ProductsService {
     if (!user) {
       throw new Error('User not found!')
     }
-
-    return user
+    const { products } = user
+    return products
   }
 
   async update ({ productId, ...data }: InterfaceProductsService) {

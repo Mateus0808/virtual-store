@@ -39,11 +39,11 @@ const UserController = {
 
   async update (req: RequestCustom, res: Response): Promise<Response> {
     const userId = req.params.id
-    const { name, email, dateBirth, gender, phone, password } = req.body
+    const { ...data } = req.body
     const userService = new UserService()
 
     try {
-      const userUpdate = await userService.update({ userId, name, email, dateBirth, gender, phone, password })
+      const userUpdate = await userService.update({ userId, ...data })
       return res.status(200).json(userUpdate)
     } catch (err) {
       return res.status(400).json({ message: err.message })

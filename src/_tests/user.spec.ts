@@ -21,7 +21,7 @@ describe('User Service', () => {
   ]
 
   beforeEach(async () => {
-    connection = await getConnection()
+    connection = getConnection()
     await connection.connect()
   })
 
@@ -30,9 +30,9 @@ describe('User Service', () => {
   })
 
   it('User add', async () => {
-    const userRepository = await getCustomRepository(UserRepository)
+    const userRepository = getCustomRepository(UserRepository)
 
-    const user = await userRepository.create({
+    const user = userRepository.create({
       name: 'Vitoria Ferreira',
       email: 'vitoria@gmail.com',
       phone: '99 9 9999-999',
@@ -42,7 +42,6 @@ describe('User Service', () => {
     })
 
     await userRepository.save(user)
-
     expect(user.email).toEqual('vitoria@gmail.com')
   })
 
@@ -57,7 +56,6 @@ describe('User Service', () => {
         dateBirth: '1998-08-05',
         password: 'Adelson@123'
       })
-
     expect(response.status).toBe(201)
   })
 
@@ -72,7 +70,6 @@ describe('User Service', () => {
         dateBirth: '1998-08-05',
         password: 'Joao@123'
       })
-    console.log(response.body)
     expect(response.body.user.email).toBe(users[0].email)
   })
 })

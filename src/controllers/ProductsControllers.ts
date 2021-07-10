@@ -3,10 +3,11 @@ import { ProductsService } from '../services/ProductsService'
 
 class ProductsController {
   async create (req: Request, res: Response): Promise<Response> {
-    const { userId, productName, price, description, imageUrl, category, quantityStock, manufacturer } = req.body
+    const { userId, ...data } = req.body
     const productsService = new ProductsService()
+
     try {
-      const product = await productsService.create({ userId, productName, price, description, imageUrl, category, quantityStock, manufacturer })
+      const product = await productsService.create({ userId, ...data })
       return res.status(201).json(product)
     } catch (err) {
       return res.status(400).json({ message: err.message })

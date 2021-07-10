@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 import { IsDate, IsEmail, IsNotEmpty, IsPhoneNumber, IsString, IsUUID, Length, Matches, MaxLength, MinLength } from 'class-validator'
 import { v4 as uuid } from 'uuid'
 import bcrypt from 'bcrypt'
@@ -47,7 +47,7 @@ export class User {
   @IsDate()
   dateBirth: Date
 
-  @Column({ name: 'password_hash' })
+  @Column({ name: 'password_hash', select: false })
   @IsNotEmpty()
   @Length(8, 30)
   @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, { message: 'Invalid password format' })
@@ -61,6 +61,12 @@ export class User {
 
   @BeforeInsert()
   async setPassword (password: string) {
+    const salt = await bcrypt.genSalt()
+    this.password = await bcrypt.hash(password || this.password, salt)
+  }
+
+  @BeforeUpdate()
+  async updatePassword (password: string) {
     const salt = await bcrypt.genSalt()
     this.password = await bcrypt.hash(password || this.password, salt)
   }

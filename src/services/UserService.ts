@@ -2,7 +2,7 @@ import { UserRepository } from '../repositories/UserRepository'
 import { getCustomRepository, Repository } from 'typeorm'
 import { User } from '@models/User'
 import { validate } from 'class-validator'
-import { generateToken } from '../utils/generateToken'
+import { generateToken, hidePassword } from '../utils/generateToken'
 
 const phoneFormat = /^\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\)? (?:[2-8]|9[1-9])[0-9]{3}-[0-9]{4}$/
 
@@ -36,16 +36,19 @@ class UserService {
       throw new Error('User already exists!')
     }
 
-    const user = this.userRepository.create({
+    const userCreate = this.userRepository.create({
       email, phone, dateBirth: dateBirthFormat, ...data
     })
 
-    const errors = await validate(user)
+    const errors = await validate(userCreate)
 
     if (errors.length !== 0) {
       throw new Error(`${errors}`) // 'Error registering user! Check the data again.'
     }
-    await this.userRepository.save(user)
+    await this.userRepository.save(userCreate)
+
+    const { password, ...userData } = userCreate
+    const user = hidePassword({ password, ...userData })
 
     return {
       user,
@@ -64,11 +67,11 @@ class UserService {
       throw new Error('User id is undefined!')
     }
 
-    const oneUser = await this.userRepository.findOne(userId)
-    if (!oneUser) {
+    const user = await this.userRepository.findOne(userId)
+    if (!user) {
       throw new Error('User not found!')
     }
-    return oneUser
+    return user
   }
 
   async update ({ userId, phone, dateBirth, ...data }: InterfaceUsersService) {
@@ -84,15 +87,15 @@ class UserService {
       throw new Error('User not found!')
     }
 
-    const userUpdate = this.userRepository.merge(userExists, { phone, dateBirth: dateBirthFormat, ...data })
+    const user = this.userRepository.merge(userExists, { phone, dateBirth: dateBirthFormat, ...data })
 
-    const errors = await validate(userUpdate)
+    const errors = await validate(user)
     if (errors.length !== 0) {
       throw new Error(`${errors}`)
     }
 
-    await this.userRepository.save(userUpdate)
-    return userUpdate
+    await this.userRepository.save(user)
+    return user
   }
 
   async delete ({ userId }: InterfaceUsersService) {
