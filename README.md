@@ -1,6 +1,6 @@
 <<<<<<< HEAD
 # Virtual Store
-=======
+---
 # Awesome Project Build with TypeORM
 
 ### Project description
