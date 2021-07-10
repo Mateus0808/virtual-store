@@ -33,8 +33,9 @@ The following tools were used in the construction of the project:
 <br />
 <sub><b>Mateus dos Santos</b></sub>
 
-
-[![Linkedin Badge](https://img.shields.io/badge/-Mateus-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/mateus-santos-aa0623196//)](https://www.linkedin.com/in/mateus-santos-aa0623196/) 
+<a target="_blank">
+  [![Linkedin Badge](https://img.shields.io/badge/-Mateus-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/mateus-santos-aa0623196//)](https://www.linkedin.com/in/mateus-santos-aa0623196/) 
+ </a>
 [![Gmail Badge](https://img.shields.io/badge/-loiolamateus7@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:loiolamateus7@gmail.com)](mailto:loiolamateus7@gmail.com)
 
 
