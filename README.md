@@ -12,8 +12,10 @@
 </h4>
 
 ### Features
- - [x] Cadastro de usuário
- - [x] Cadastro de produtos
+<input type="checkbox">
+<label> Cadastro de usuário</label><br>
+<input type="checkbox">
+<label> Cadastro de produtos</label><br>
 
 ### Pré-requisitos
 Before starting, you will need to have the following tools installed on your machine: [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
