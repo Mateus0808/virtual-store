@@ -3,12 +3,7 @@
 =======
 # Awesome Project Build with TypeORM
 
-### Steps to run this project:
-  1. Run `npm i` or `yarn` command
-  2. Setup database settings inside `ormconfig.json` file
-  3. Run `npm start` or `yarn start` comman
-
-## Project description
+### Project description
 <p align="center">Back-end built to manage a virtual store</p>
 
 ### Project Status
