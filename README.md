@@ -1,7 +1,7 @@
 # Virtual Store
 ---
 ### Project description
-<p align="center">Back-end built to manage a virtual store</p>
+<p align="center">Back-end built to manage a virtual store with registration of users and products.</p>
 
 ### Project Status
 <h4 align="center"> 
