@@ -4,8 +4,4 @@ node_modules/
 build/
 tmp/
 temp/
-<<<<<<< HEAD
-./dist
-=======
 dist/
->>>>>>> dev-mateus

@@ -2,13 +2,13 @@ import { UserRepository } from '../repositories/UserRepository'
 import { getCustomRepository, Repository } from 'typeorm'
 import { User } from '@models/User'
 import { validate } from 'class-validator'
+import { generateToken, hidePassword } from '../utils/generateToken'
 
 const phoneFormat = /^\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\)? (?:[2-8]|9[1-9])[0-9]{3}-[0-9]{4}$/
 
 interface InterfaceUsersService {
   userId?: string,
-  firstName?: string,
-  lastName?: string,
+  name?: string,
   email?: string,
   phone?: string,
   gender?: string,
@@ -25,8 +25,8 @@ class UserService {
 
   async create ({ email, phone, dateBirth, ...data }: InterfaceUsersService) {
     const dateBirthFormat = new Date(dateBirth)
-    const numberFormated = phone.match(phoneFormat)
 
+    const numberFormated = phone.match(phoneFormat)
     if (!numberFormated) {
       throw new Error('Invalid phone!')
     }
@@ -36,18 +36,24 @@ class UserService {
       throw new Error('User already exists!')
     }
 
-    const user = this.userRepository.create({
+    const userCreate = this.userRepository.create({
       email, phone, dateBirth: dateBirthFormat, ...data
     })
 
-    const errors = await validate(user)
+    const errors = await validate(userCreate)
 
     if (errors.length !== 0) {
       throw new Error(`${errors}`) // 'Error registering user! Check the data again.'
     }
-    await this.userRepository.save(user)
+    await this.userRepository.save(userCreate)
 
-    return user
+    const { password, ...userData } = userCreate
+    const user = hidePassword({ password, ...userData })
+
+    return {
+      user,
+      token: generateToken({ userId: user.id })
+    }
   }
 
   async findUsers () {
@@ -57,24 +63,39 @@ class UserService {
   }
 
   async findUser ({ userId }: InterfaceUsersService) {
-    const oneUser = await this.userRepository.findOne(userId)
-    if (!oneUser) {
+    if (!userId) {
+      throw new Error('User id is undefined!')
+    }
+
+    const user = await this.userRepository.findOne(userId)
+    if (!user) {
       throw new Error('User not found!')
     }
-    return oneUser
+    return user
   }
 
-  async update ({ userId, ...data }: InterfaceUsersService) {
-    const userExists = await this.userRepository.findOne(userId)
+  async update ({ userId, phone, dateBirth, ...data }: InterfaceUsersService) {
+    const dateBirthFormat = new Date(dateBirth)
 
+    const numberFormated = phone.match(phoneFormat)
+    if (!numberFormated) {
+      throw new Error('Invalid phone!')
+    }
+
+    const userExists = await this.userRepository.findOne(userId)
     if (!userExists) {
       throw new Error('User not found!')
     }
 
-    const userUpdate = this.userRepository.merge(userExists, { ...data })
-    await this.userRepository.save(userUpdate)
+    const user = this.userRepository.merge(userExists, { phone, dateBirth: dateBirthFormat, ...data })
 
-    return userUpdate
+    const errors = await validate(user)
+    if (errors.length !== 0) {
+      throw new Error(`${errors}`)
+    }
+
+    await this.userRepository.save(user)
+    return user
   }
 
   async delete ({ userId }: InterfaceUsersService) {

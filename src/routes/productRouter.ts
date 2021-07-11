@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { ProductsController } from '../controllers/ProductsControllers'
+import { ProductsController } from '@controllers/ProductsControllers'
 
 const productsController = new ProductsController()
 
@@ -10,5 +10,6 @@ routes.post('/product', productsController.create)
 routes.get('/products', productsController.allProducts)
 routes.get('/products/:userId', productsController.allProductsOneUser)
 routes.put('/products/:productId', productsController.update)
+routes.delete('/products/:productId', productsController.delete)
 
 export default routes
