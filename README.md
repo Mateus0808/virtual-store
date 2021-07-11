@@ -29,7 +29,7 @@ The following tools were used in the construction of the project:
 ### Autor
 ---
 <a href="">
-<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/47755555?s=400&u=c38445d9bd8886642d093308cdad61e4642d4b8a&v=4" width="100px;" alt=""/>
+<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/47755555?s=400&u=c38445d9bd8886642d093308cdad61e4642d4b8a&v=4" width="150px;" alt=""/>
 <br />
 <sub><b>Mateus dos Santos</b></sub></a> <a href="">🚀</a>
 
