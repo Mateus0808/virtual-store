@@ -8,6 +8,8 @@ const userAuth = new UserAuthentication()
 const routes = Router()
 
 routes.post('/login', userAuth.login)
+routes.post('/auth/:token', userAuth.recoverUserInformation)
+
 routes.post('/user', UserController.create)
 routes.get('/users', middlewareAuth, UserController.listUsers)
 routes.get('/users/:id', middlewareAuth, UserController.oneUser)

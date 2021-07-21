@@ -13,7 +13,8 @@ interface InterfaceUsersService {
   phone?: string,
   gender?: string,
   dateBirth?: Date,
-  password?: string
+  password?: string,
+  token?: string
 }
 
 class UserService {

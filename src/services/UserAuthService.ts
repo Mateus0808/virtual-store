@@ -2,10 +2,15 @@ import { UserRepository } from '../repositories/UserRepository'
 import { getCustomRepository } from 'typeorm'
 import bcrypt from 'bcrypt'
 import { generateToken, hidePassword } from '../utils/generateToken'
+import jwt from 'jsonwebtoken'
 
 interface interfaceLogin {
   email: string,
   password: string
+}
+
+interface interfaceToken {
+  token: string
 }
 
 class UserAuthService {
@@ -29,6 +34,22 @@ class UserAuthService {
     const user = hidePassword(userLogin)
     const token = generateToken({ userId: userLogin.id })
     return { user, token }
+  }
+
+  async recoverUserInfo ({ token }: interfaceToken) {
+    const decoded = jwt.decode(token, { complete: true })
+
+    if (!decoded) {
+      throw new Error('Provided token does not decode as JWT')
+    }
+    const { userId } = decoded.payload
+    const userRepository = getCustomRepository(UserRepository)
+    const userExists = await userRepository.findOne(userId)
+
+    if (!userExists) {
+      throw new Error('User not found')
+    }
+    return userExists
   }
 }
 
