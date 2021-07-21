@@ -19,6 +19,18 @@ class UserAuthentication {
       return res.status(400).json({ message: error.message })
     }
   }
+
+  async recoverUserInformation (req: RequestCustom, res: Response): Promise<Response> {
+    const { token } = req.params
+    const userAuthService = new UserAuthService()
+
+    try {
+      const user = await userAuthService.recoverUserInfo({ token })
+      return res.status(200).json(user)
+    } catch (err) {
+      return res.status(400).json({ error: err.message })
+    }
+  }
 }
 
 export { UserAuthentication }

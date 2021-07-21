@@ -16,7 +16,6 @@ export class User {
   products: Products[]
 
   @Column()
-  @MaxLength(60)
   @MinLength(3, { message: 'Name must be at least 3 caracters' })
   @IsString()
   @IsNotEmpty()
