@@ -1,13 +1,13 @@
 [
   {
-    "name": "development",
+    "name": "default",
     "type": "postgres",
     "host": "localhost",
     "port": 5432,
     "username": "postgres",
     "password": "passAdmin",
     "database": "virtualstore",
-    "synchronize": true,
+    "synchronize": false,
     "entities": [
       "src/models/**/*.ts"
     ],

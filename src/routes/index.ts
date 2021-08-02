@@ -1,10 +1,14 @@
 import { Router } from 'express'
 import UserRouter from './userRouter'
-import ProductsRouter from './productRouter'
+import RefreshToken from './refreshTokenRoutes'
+import UserAuth from './userAuth'
+import multer from './multer'
 
 const router = Router()
 
+router.use(UserAuth)
 router.use(UserRouter)
-router.use(ProductsRouter)
+router.use(RefreshToken)
+router.use(multer)
 
 export default router

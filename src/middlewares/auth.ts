@@ -11,6 +11,7 @@ const middlewareAuth = (req: RequestCustom, res: Response, next: NextFunction) =
   try {
     // Contains the credentials to authenticate a user with a server.
     const authHeader = req.headers.authorization
+    console.log(authHeader)
     if (!authHeader) { // Check if there are any credentials
       return res.status(401).json({ error: 'No token provided!' })
     }

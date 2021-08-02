@@ -11,12 +11,16 @@ describe('User Service', () => {
   const dateBirthFormat = new Date('1998-08-05')
   const users = [
     {
-      name: 'João Soares',
-      email: 'joaomaiu@gmail.com',
-      phone: '(87) 99845-4545',
+      firstName: 'Mateus',
+      lastName: 'Santos',
+      email: 'mateus@gmail.com',
+      phone: '84 99998-8978',
       gender: 'Masculino',
       dateBirth: dateBirthFormat,
-      password: 'joao'
+      password: 'Mateus@0',
+      avatar: 'url',
+      emailVerified: '2021-08-08',
+      admin: false
     }
   ]
 
@@ -39,12 +43,15 @@ describe('User Service', () => {
     const response = await request(app)
       .post('/user')
       .send({
-        name: 'Adelson Nunes',
+        firstName: 'Adelson',
+        lastName: 'Nunes',
         email: 'adelson@gmail.com',
         phone: '87 98945-9994',
         gender: 'Masculino',
         dateBirth: '1998-08-05',
-        password: 'Adelson@123'
+        password: 'Adelson@123',
+        emailVerified: '2021-08-08',
+        admin: false
       })
     expect(response.status).toBe(201)
   })
@@ -53,12 +60,15 @@ describe('User Service', () => {
     const response = await request(app)
       .post('/user')
       .send({
-        name: 'João Soares',
+        firstName: 'João',
+        lastName: 'Soares',
         email: 'joaomaiu@gmail.com',
         phone: '(89) 99894-9456',
         gender: 'Masculino',
         dateBirth: '1998-08-05',
-        password: 'Joao@123'
+        password: 'Joao@123',
+        emailVerified: '2021-08-08',
+        admin: false
       })
     expect(response.body.user.email).toBe(users[0].email)
   })
@@ -67,12 +77,15 @@ describe('User Service', () => {
     const userRepository = getCustomRepository(UserRepository)
 
     const user = userRepository.create({
-      name: 'Vitoria Ferreira',
+      firstName: 'Ferreira',
+      lastName: 'Ferreira',
       email: 'vitoria@gmail.com',
       phone: '99 9 9999-999',
       gender: 'Feminino',
       dateBirth: '1999-11-15',
-      password: 'vitoria'
+      password: 'vitoria',
+      emailVerified: '2021-08-08',
+      admin: false
     })
 
     await userRepository.save(user)
