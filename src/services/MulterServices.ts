@@ -1,19 +1,11 @@
 import { Avatar } from '@models/AvatarModel'
-import { AvatarRepository } from 'src/repositories/AvatarRepository'
-import { UserRepository } from 'src/repositories/UserRepository'
+import { AvatarRepository } from '../repositories/AvatarRepository'
+import { UserRepository } from '../repositories/UserRepository'
 import { getCustomRepository, Repository } from 'typeorm'
-
-interface InterfaceMulterServices {
-  name: string,
-  size: number,
-  key: string,
-  userId: string,
-  url: string
-}
+import { InterfaceMulterServices } from '../@types/multer'
 
 class MulterServices {
   private avatarRepository: Repository<Avatar>
-
   constructor () {
     this.avatarRepository = getCustomRepository(AvatarRepository)
   }

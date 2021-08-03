@@ -1,10 +1,13 @@
 import { Request, Response } from 'express'
 import { MulterServices } from '../services/MulterServices'
+import { InterfaceRequestFile } from '../@types/multer'
 
 class MulterControllers {
   async create (req:Request, res:Response): Promise<Response> {
     try {
-      const { originalname: name, size, key, location: url = '' } = req.file
+      const {
+        originalname: name, size, key, location: url = ''
+      }: InterfaceRequestFile = req.file
       const userId = req.params.id
 
       const multerServices = new MulterServices()
@@ -41,7 +44,9 @@ class MulterControllers {
 
   async update (req: Request, res: Response): Promise<Response> {
     try {
-      const { originalname: name, size, key, location: url = '' } = req.file
+      const {
+        originalname: name, size, key, location: url = ''
+      }: InterfaceRequestFile = req.file
       const userId = req.params.userId
       const multerServices = new MulterServices()
       const avatar = await multerServices.update({ userId, key, name, size, url })

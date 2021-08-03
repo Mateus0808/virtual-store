@@ -3,6 +3,7 @@ import path from 'path'
 import crypto from 'crypto'
 import aws from 'aws-sdk'
 import multerS3 from 'multer-s3'
+import { InterfaceRequestFile } from '../@types/multer'
 require('dotenv').config()
 
 const storageTypes = {
@@ -10,7 +11,7 @@ const storageTypes = {
     destination: (req, file, cb) => {
       cb(null, path.resolve(__dirname, '..', '..', 'tmp', 'uploads'))
     },
-    filename: (req, file, cb) => {
+    filename: (req, file: InterfaceRequestFile, cb) => {
       crypto.randomBytes(16, (err, hash) => {
         if (err) cb(err, undefined)
         file.key = `${hash.toString('hex')}-${file.originalname}`

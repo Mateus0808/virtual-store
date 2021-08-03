@@ -1,10 +1,7 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 
 import { UserAuthService } from '../services/UserAuthServices'
-
-interface RequestCustom extends Request {
-  userId: string
-}
+import { RequestCustom } from '../@types/requestCustomInterface'
 
 class UserAuthentication {
   async create (req: RequestCustom, res: Response): Promise<Response> {
@@ -36,7 +33,7 @@ class UserAuthentication {
     const userAuthService = new UserAuthService()
 
     try {
-      const user = await userAuthService.recoverUserInfo({ token })
+      const user = await userAuthService.recoverUserInfo(token)
       return res.status(200).json(user)
     } catch (error) {
       return res.status(400).json({ error: error.message })

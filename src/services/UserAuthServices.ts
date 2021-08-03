@@ -6,31 +6,8 @@ import { hidePassword } from '../provider/hidePassword'
 import jwt from 'jsonwebtoken'
 import { validate } from 'class-validator'
 import { GenerateRefreshToken } from '../provider/GenerateRefreshToken'
-
-const phoneFormat = /^\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\)? (?:[2-8]|9[1-9])[0-9]{3}-[0-9]{4}$/
-
-interface InterfaceUsersService {
-  userId?: string,
-  firstName?: string,
-  lastName?: string,
-  email?: string,
-  phone?: string,
-  gender?: string,
-  dateBirth?: string,
-  password?: string,
-  token?: string
-  admin: boolean
-  emailVerified?: Date
-}
-
-interface interfaceLogin {
-  email: string,
-  password: string
-}
-
-interface interfaceToken {
-  token: string
-}
+import { InterfaceUsersService, interfaceLogin } from '../@types/userInterface'
+import { phoneFormat } from '../provider/phoneMatch'
 
 class UserAuthService {
   async create ({ email, phone, dateBirth, ...data }: InterfaceUsersService) {
@@ -79,7 +56,7 @@ class UserAuthService {
     return { token, refreshToken }
   }
 
-  async recoverUserInfo ({ token }: interfaceToken) {
+  async recoverUserInfo (token: string) {
     const decoded = jwt.decode(token, { complete: true })
 
     if (!decoded) { throw new Error('Provided token does not decode as JWT') }
