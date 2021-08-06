@@ -21,7 +21,6 @@ class RefreshTokenServices {
     const refreshTokenExpired = dayjs().isAfter(dayjs.unix(refreshToken.expiresIn))
 
     if (refreshTokenExpired) {
-      console.log(refreshToken.userId)
       await this.refreshTokenRepository.delete({ userId: refreshToken.userId })
 
       const generateRefreshToken = new GenerateRefreshToken()

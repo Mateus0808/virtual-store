@@ -1,9 +1,10 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { MulterServices } from '../services/MulterServices'
 import { InterfaceRequestFile } from '../@types/multer'
+import { RequestCustom } from '../@types/requestCustomInterface'
 
 class MulterControllers {
-  async create (req:Request, res:Response): Promise<Response> {
+  async create (req:RequestCustom, res:Response): Promise<Response> {
     try {
       const {
         originalname: name, size, key, location: url = ''
@@ -19,7 +20,7 @@ class MulterControllers {
     }
   }
 
-  async searchAll (req: Request, res: Response): Promise<Response> {
+  async searchAll (req: RequestCustom, res: Response): Promise<Response> {
     try {
       const multerServices = new MulterServices()
       const avatar = await multerServices.searchAll()
@@ -30,7 +31,7 @@ class MulterControllers {
     }
   }
 
-  async searchOne (req: Request, res: Response): Promise<Response> {
+  async searchOne (req: RequestCustom, res: Response): Promise<Response> {
     try {
       const userId = req.params.userId
       const multerServices = new MulterServices()
@@ -42,7 +43,7 @@ class MulterControllers {
     }
   }
 
-  async update (req: Request, res: Response): Promise<Response> {
+  async update (req: RequestCustom, res: Response): Promise<Response> {
     try {
       const {
         originalname: name, size, key, location: url = ''
@@ -57,7 +58,7 @@ class MulterControllers {
     }
   }
 
-  async delete (req: Request, res: Response): Promise<Response> {
+  async delete (req: RequestCustom, res: Response): Promise<Response> {
     try {
       const idImage = req.params.idImage
       const multerServices = new MulterServices()

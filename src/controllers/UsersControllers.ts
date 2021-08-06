@@ -20,7 +20,7 @@ const UserController = {
     const userId = req.params.id
     const userService = new UserService()
     try {
-      const allUsers = await userService.findUser({ userId })
+      const allUsers = await userService.findUser(userId)
       return res.status(200).json(allUsers)
     } catch (error) {
       return res.status(400).json({ Error: error.message })
@@ -45,7 +45,7 @@ const UserController = {
     const userService = new UserService()
 
     try {
-      await userService.delete({ userId })
+      await userService.delete(userId)
       return res.status(200).json({ Error: 'Deleted user!' })
     } catch (error) {
       return res.status(400).json({ Error: error.message })

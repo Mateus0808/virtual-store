@@ -1,5 +1,5 @@
 import {
-  AfterLoad, BeforeInsert, BeforeUpdate, Column,
+  BeforeInsert, Column,
   CreateDateColumn, Entity, OneToOne, PrimaryColumn, UpdateDateColumn
 } from 'typeorm'
 import {
@@ -13,10 +13,10 @@ import bcrypt from 'bcrypt'
 import { RefreshToken } from './RefreshTokenModel'
 import { Avatar } from './AvatarModel'
 
+// let tempPassword: string = ''
+
 @Entity('users')
 export class User {
-  private tempPassword: string;
-
   @PrimaryColumn('uuid')
   @IsUUID('4')
   id: string
@@ -81,10 +81,10 @@ export class User {
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date
 
-  @AfterLoad()
-  private loadTempPassword (): void {
-    this.tempPassword = this.password
-  }
+  // @AfterUpdate()
+  // private loadTempPassword (): void {
+  //   tempPassword = this.password
+  // }
 
   @BeforeInsert()
   async setPassword (password: string) {
@@ -92,13 +92,14 @@ export class User {
     this.password = await bcrypt.hash(password || this.password, salt)
   }
 
-  @BeforeUpdate()
-  async updatePassword (password: string) {
-    if (this.tempPassword !== this.password) {
-      const salt = await bcrypt.genSalt()
-      this.password = await bcrypt.hash(password || this.password, salt)
-    }
-  }
+  // @BeforeUpdate()
+  // async updatePassword (password: string) {
+  //   if (tempPassword !== this.password) {
+  //     const salt = await bcrypt.genSalt()
+  //     console.log(salt)
+  //     this.password = await bcrypt.hash(password || this.password, salt)
+  //   }
+  // }
 
   constructor () {
     if (!this.id) {

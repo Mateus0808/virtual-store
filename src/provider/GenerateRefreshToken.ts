@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 class GenerateRefreshToken {
   async execute (userId: string) {
-    const expiresIn = dayjs().add(120, 'second').unix()
+    const expiresIn = dayjs().add(60 * 60 * 1, 'second').unix()
     const refreshTokenRepository = getCustomRepository(RefreshTokenRepository)
 
     const refreshTokenAlreadyExists = await refreshTokenRepository.findOne({ userId: userId })

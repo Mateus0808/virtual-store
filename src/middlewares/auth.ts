@@ -1,17 +1,12 @@
-import { Response, Request, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-
-const KEY_DECODED = 'cf22e864a71e76338b3e2900b0e6bd70'
-
-interface RequestCustom extends Request {
-  userId: string
-}
+import { RequestCustom } from '../@types/requestCustomInterface'
 
 const middlewareAuth = (req: RequestCustom, res: Response, next: NextFunction) => {
   try {
     // Contains the credentials to authenticate a user with a server.
     const authHeader = req.headers.authorization
-    console.log(authHeader)
+
     if (!authHeader) { // Check if there are any credentials
       return res.status(401).json({ error: 'No token provided!' })
     }
@@ -31,12 +26,11 @@ const middlewareAuth = (req: RequestCustom, res: Response, next: NextFunction) =
     }
 
     // checks token integrity and authenticity
-    jwt.verify(token, KEY_DECODED, (err, decoded) => {
+    jwt.verify(token, process.env.KEY_DECODED, (err, decoded) => {
       if (err) return res.status(401).json({ error: 'Invalid token!' })
 
       // Adding a userId variable to the Req can access the userId on any route
       req.userId = decoded.userId
-
       // Give access to the route
       return next()
     })

@@ -53,7 +53,7 @@ class UserAuthService {
 
     const generateRefreshToken = new GenerateRefreshToken()
     const refreshToken = await generateRefreshToken.execute(user.id)
-    return { token, refreshToken }
+    return { user, token, refreshToken }
   }
 
   async recoverUserInfo (token: string) {

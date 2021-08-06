@@ -1,8 +1,9 @@
-import { Response, Request } from 'express'
+import { Response } from 'express'
 import { RefreshTokenServices } from '../services/RefreshTokenServices'
+import { RequestCustom } from '../@types/requestCustomInterface'
 
 class RefreshTokenUserController {
-  async hadle (req: Request, res: Response): Promise<Response> {
+  async hadle (req: RequestCustom, res: Response): Promise<Response> {
     try {
       const refreshToken = req.params.idRefreshToken
       const refreshTokenServices = new RefreshTokenServices()

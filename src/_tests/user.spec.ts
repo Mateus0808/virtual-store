@@ -62,7 +62,7 @@ describe('User Service', () => {
       .send({
         firstName: 'João',
         lastName: 'Soares',
-        email: 'joaomaiu@gmail.com',
+        email: 'mateus@gmail.com',
         phone: '(89) 99894-9456',
         gender: 'Masculino',
         dateBirth: '1998-08-05',
