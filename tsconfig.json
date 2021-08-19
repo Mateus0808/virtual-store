@@ -28,7 +28,7 @@
     },
     "include": [
       "src/**/*"
-    ],
+, "src/@types", "src/_tests"    ],
     "exclude": [
        "**/*.spec.ts"
     ]

@@ -6,4 +6,8 @@ const createConnectionTypeORM = async () => {
   return connection
 }
 
-createConnectionTypeORM()
+createConnectionTypeORM().then(() => {
+  console.log('Connection success')
+}).catch((error: Error) => {
+  console.log(error.message)
+})
